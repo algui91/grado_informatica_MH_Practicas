@@ -17,12 +17,12 @@ class Data:
     file_name = ''
     tam = 0
 
-    def __init__(self, file_name):
+    def __init__(self, f_name):
         '''
-        Read data to matrix from file
+        Read f_name to matrix from file
         '''
-        print 'Reading data from %s' % file_name
-        self.file_name = file_name
+        print 'Reading data from %s' % f_name
+        self.file_name = f_name
         self._load_data()
         
     def _load_data(self):

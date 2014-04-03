@@ -12,11 +12,11 @@ class LocalSearch(Heuristic):
     Local Search with Don't look bits
     '''
 
-    def __init__(self, file_name):
+    def __init__(self, f_name):
         '''
         Constructor
         '''
-        super(LocalSearch, self).__init__(file_name)
+        super(LocalSearch, self).__init__(f_name)
         self._DLB = [0] * self._data.tam
         self._find_solution()
         
@@ -26,12 +26,13 @@ class LocalSearch(Heuristic):
                 improve_flag = False
                 for j in xrange(self._tam):
                     neighbor = self.swap(i, j)
-                    if (self.deltaC(i, j) < 0):
-                        print 'DeltaC(s) = %s, changing solution, C(S) = %s' % (self.deltaC(i, j), self.cost)
+                    improvement = self.deltaC(i, j)
+                    if (improvement < 0):
+                        self.cost += improvement
                         self.S = neighbor
                         self._DLB[i] = self._DLB[j] = 0
                         improve_flag = True
                 if not improve_flag:
                     self._DLB[i] = 1
-        self.C()
+        #self.C()
             

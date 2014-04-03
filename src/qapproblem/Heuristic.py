@@ -22,10 +22,10 @@ class Heuristic(object):
     S = []
     cost = 0
     
-    def __init__(self, file_name):
+    def __init__(self, f_name):
         # Initialize our seed
         random.seed(5512654)
-        self._data = Data(file_name)
+        self._data = f_name
         self._tam = self._data.tam
         self._gen_random_sol()
         
@@ -51,6 +51,7 @@ class Heuristic(object):
                 cost += self._data.stream_matrix[i][j] * self._data.distance_matrix[self.S[i]][self.S[j]]
         
         self.cost = cost    
+        return cost
     
     def swap(self,i,j):
         s = list(self.S)
@@ -65,14 +66,14 @@ class Heuristic(object):
         delta = 0
         for k in xrange(self._tam):
             if k != r and k != s:
-                delta += self._data.stream_matrix[r][k] \
+                delta += (self._data.stream_matrix[r][k] \
                     * (self._data.distance_matrix[self.S[s]][self.S[k]] - self._data.distance_matrix[self.S[r]][self.S[k]]) + \
                     self._data.stream_matrix[s][k] \
                     * (self._data.distance_matrix[self.S[r]][self.S[k]] - self._data.distance_matrix[self.S[s]][self.S[k]]) + \
                     self._data.stream_matrix[k][r] \
                     * (self._data.distance_matrix[self.S[k]][self.S[s]] - self._data.distance_matrix[self.S[k]][self.S[r]]) + \
                     self._data.stream_matrix[k][s] \
-                    * (self._data.distance_matrix[self.S[k]][self.S[r]] - self._data.distance_matrix[self.S[k]][self.S[s]])
+                    * (self._data.distance_matrix[self.S[k]][self.S[r]] - self._data.distance_matrix[self.S[k]][self.S[s]]))
         return delta
 
     def gen_neighbor(self):
