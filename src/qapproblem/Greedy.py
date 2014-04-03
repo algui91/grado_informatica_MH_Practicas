@@ -54,5 +54,5 @@ class Greedy(Heuristic):
 
             copy_of_streams[copy_of_streams.index(new_unit)] =  None
             copy_of_distances[copy_of_distances.index(new_location)] = None
-
+            
         self.C()

@@ -10,6 +10,7 @@ Licensed under GPLv3
 import argparse
 
 from qapproblem.Greedy import Greedy
+from qapproblem.LocalSearch import LocalSearch
 
 
 def main(): 
@@ -26,7 +27,10 @@ def main():
     
     if (algorithm == 'greedy'):
         greedy = Greedy(data_file)
-        print 'Cost of solution for Greedy: ', greedy.cost , ' with permutation %s ' % greedy.S
+        print 'Results for Greedy, S = ', greedy.cost , ' C(S) = ' , greedy.S
+    elif (algorithm == 'local_search'):
+        ls = LocalSearch(data_file)
+        print 'Results for Local Search, S = ', ls.cost , ' C(S) ' , ls.S
     else:
         print 'Argumentos inválidos'
     
