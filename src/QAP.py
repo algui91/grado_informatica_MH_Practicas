@@ -26,15 +26,17 @@ def main():
     
     data_file = args.data_file
     algorithm =  args.algorithm.strip().lower()
+    seed = args.seed
     
     data = Data(data_file)
     
     if (algorithm == 'greedy'):
-        greedy = Greedy(data)
+        greedy = Greedy(data, seed)
         print 'Results for Greedy, S = ', greedy.cost , ' C(S) = ' , greedy.S
     elif (algorithm == 'local_search'):
-        ls = LocalSearch(data)
-        print 'Results for Local Search, S = ', ls.cost , ' C(S) ' , ls.S
+        ls = LocalSearch(data, seed)
+        print 'Results for Local Search, S = ', ls.S , ' C(S) ' , ls.C()
+        #print data.file_name , ls.cost
     else:
         print 'Argumentos inválidos'
     

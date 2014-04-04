@@ -12,11 +12,11 @@ class LocalSearch(Heuristic):
     Local Search with Don't look bits
     '''
 
-    def __init__(self, f_name):
+    def __init__(self, f_name, seed):
         '''
         Constructor
         '''
-        super(LocalSearch, self).__init__(f_name)
+        super(LocalSearch, self).__init__(f_name, seed)
         self._DLB = [0] * self._data.tam
         self._find_solution()
         
@@ -34,5 +34,3 @@ class LocalSearch(Heuristic):
                         improve_flag = True
                 if not improve_flag:
                     self._DLB[i] = 1
-        #self.C()
-            

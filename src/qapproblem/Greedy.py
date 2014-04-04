@@ -18,11 +18,11 @@ class Greedy(Heuristic):
     _delta_distance = []
     _delta_stream = []
     
-    def __init__(self, f_name):
+    def __init__(self, f_name, seed):
         '''
         Constructor
         '''
-        super(Greedy, self).__init__(f_name)
+        super(Greedy, self).__init__(f_name, seed)
         
         self._delta_distance = self._delta(self._data.distance_matrix)
         self._delta_stream = self._delta(self._data.stream_matrix)

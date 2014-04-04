@@ -21,7 +21,7 @@ class Data:
         '''
         Read f_name to matrix from file
         '''
-        print 'Reading data from %s' % f_name
+        #print 'Reading data from %s' % f_name
         self.file_name = f_name
         self._load_data()
         

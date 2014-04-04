@@ -10,9 +10,6 @@ Licensed under GPLv3
 
 import random
 
-from qapproblem.Data import Data
-
-
 class Heuristic(object):
     '''
     Common operations for all implemented Heuristics
@@ -21,10 +18,12 @@ class Heuristic(object):
     # Vector with the permutation for the solution
     S = []
     cost = 0
+    seed = 0
     
-    def __init__(self, f_name):
+    def __init__(self, f_name, seed):
         # Initialize our seed
-        random.seed(5512654)
+        random.seed(seed)
+        self.seed = seed
         self._data = f_name
         self._tam = self._data.tam
         self._gen_random_sol()
@@ -37,7 +36,7 @@ class Heuristic(object):
                 
         ## TODO: quitar
         self.C()
-        print 'Initial Random S =  %s, C(S) = %d \n' % (self.S, self.cost)
+        #print 'Initial Random S =  %s, C(S) = %d, seed = %s\n\n\n' % (self.S, self.cost, self.seed)
                 
     def C(self, S=None):
         '''
