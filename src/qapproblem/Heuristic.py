@@ -79,4 +79,6 @@ class Heuristic(object):
         '''
         Performs a swap between two elements in S to produce a neighbor solution
         '''
-        pass
+
+        return self.swap(random.randint(0,self._tam-1), random.randint(0,self._tam-1))
+        
