@@ -9,9 +9,9 @@ Licensed under GPLv3
 '''
 import argparse
 
+from qapproblem.Data import Data
 from qapproblem.Greedy import Greedy
 from qapproblem.LocalSearch import LocalSearch
-from qapproblem.Data import Data
 from qapproblem.SimulatedAnealling import SimulatedAnealling
 
 

@@ -32,17 +32,18 @@ class SimulatedAnealling(Heuristic):
         # Current Temp
         self.T = self.T_0
         # Number of repetitions
-        self.nrep = 10000
+        self.n_iter = 10000.0 / self._tam
         # Max number of neighbor
         self.max_neighbors = self._tam
         self.max_successes = .1 * self.max_neighbors
         
+        
+        self.n_eval = 0
         self._find_solution()
         
     def _cooling_schedule(self):
-        beta = (self.T_0 / self.T_f) / (self.nrep * self.T_0 * self.T_f)
+        beta = (self.T_0 / self.T_f) / (self.n_iter * self.T_0 * self.T_f)
         self.T = self.T / (1 + beta *self.T)
-    
     
     def _find_solution(self):
 
@@ -50,9 +51,10 @@ class SimulatedAnealling(Heuristic):
         S_act = self.S
         best_C = C_act
         best_S = self.S
-        #self.T = self.T_0
         
-        while self.nrep:
+        print 'Tem ini ', self.T
+        
+        while self.n_eval <= 10000:
             n_successes = 0
             neighbors_generated = 0
             while neighbors_generated < self.max_neighbors or n_successes < self.max_successes:
@@ -60,6 +62,7 @@ class SimulatedAnealling(Heuristic):
                 neighbor = self.gen_neighbor()
                 neighbors_generated += 1
                 C_neighbor = self.C(neighbor)
+                self.n_eval += 1
                 delta = C_neighbor - best_C
                 if delta < 0:
                     n_successes += 1
@@ -75,10 +78,9 @@ class SimulatedAnealling(Heuristic):
                         C_act = C_act + delta
                         n_successes += 1
                     
-                print 'Generate neighbor %s' % neighbor
+                #print 'Generate neighbor %s' % neighbor
                 
-            self.nrep -= 1
+            self.n_iter -= 1
             self._cooling_schedule()
-
+            print 'T: ', self.T , 'Iter ', self.n_iter
         return best_S, best_C
-        
