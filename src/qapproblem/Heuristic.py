@@ -45,9 +45,14 @@ class Heuristic(object):
         '''
         cost = 0
         
+        if S is not None:
+            s = S 
+        else:
+            s = self.S
+        
         for i in xrange(self._tam):
             for j in xrange(self._tam):
-                cost += self._data.stream_matrix[i][j] * self._data.distance_matrix[self.S[i]][self.S[j]]
+                cost += self._data.stream_matrix[i][j] * self._data.distance_matrix[s[i]][s[j]]
         
         self.cost = cost    
         return cost

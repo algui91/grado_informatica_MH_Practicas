@@ -12,6 +12,7 @@ import argparse
 from qapproblem.Greedy import Greedy
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.Data import Data
+from qapproblem.SimulatedAnealling import SimulatedAnealling
 
 
 def main(): 
@@ -37,6 +38,9 @@ def main():
         ls = LocalSearch(data, seed)
         print 'Results for Local Search, S = ', ls.S , ' C(S) ' , ls.C()
         #print data.file_name , ls.cost
+    elif (algorithm == 'sa'):
+        sa = SimulatedAnealling(data, seed)
+        print 'Results for Simulated Annealing, S = ', sa.S , ' C(S) ' , sa.C()
     else:
         print 'Argumentos inválidos'
     

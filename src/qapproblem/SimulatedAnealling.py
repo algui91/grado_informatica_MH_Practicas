@@ -29,6 +29,8 @@ class SimulatedAnealling(Heuristic):
         self.T_0 = (self.mu * self.C()) / -log(self.prob)
         # Final temp
         self.T_f = 10**-3
+        # Current Temp
+        self.T = self.T_0
         # Number of repetitions
         self.nrep = 10000
         # Max number of neighbor
@@ -38,7 +40,8 @@ class SimulatedAnealling(Heuristic):
         self._find_solution()
         
     def _cooling_schedule(self):
-        pass
+        beta = (self.T_0 / self.T_f) / (self.nrep * self.T_0 * self.T_f)
+        self.T = self.T / (1 + beta *self.T)
     
     
     def _find_solution(self):
@@ -47,18 +50,17 @@ class SimulatedAnealling(Heuristic):
         S_act = self.S
         best_C = C_act
         best_S = self.S
-        num_iter = 0
-        T = 0
+        #self.T = self.T_0
         
         while self.nrep:
             n_successes = 0
             neighbors_generated = 0
-            while neighbors_generated <= self.max_neighbors or n_successes <= self.max_successes:
+            while neighbors_generated < self.max_neighbors or n_successes < self.max_successes:
                 # Generate a random neighbor
                 neighbor = self.gen_neighbor()
                 neighbors_generated += 1
-                C_neighbor = self.C()
-                delta = C_neighbor - C_act
+                C_neighbor = self.C(neighbor)
+                delta = C_neighbor - best_C
                 if delta < 0:
                     n_successes += 1
                     S_act = neighbor
@@ -66,8 +68,8 @@ class SimulatedAnealling(Heuristic):
                     best_S = neighbor
                     best_C = C_neighbor
                 else:
-                    accept_prob = exp(-delta/T)
-                    n = random.random()
+                    accept_prob = exp(-delta/self.T)
+                    n = random()
                     if n < accept_prob:
                         S_act = neighbor
                         C_act = C_act + delta
@@ -76,6 +78,7 @@ class SimulatedAnealling(Heuristic):
                 print 'Generate neighbor %s' % neighbor
                 
             self.nrep -= 1
-    
-        return best_S, best_S
+            self._cooling_schedule()
+
+        return best_S, best_C
         
