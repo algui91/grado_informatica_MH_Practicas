@@ -33,14 +33,14 @@ def main():
     
     if (algorithm == 'greedy'):
         greedy = Greedy(data, seed)
-        print 'Results for Greedy, S = ', greedy.cost , ' C(S) = ' , greedy.S
+        print 'Results for Greedy, S=', greedy.cost , ' C(S)=' , greedy.S , ' seed=' , seed
     elif (algorithm == 'local_search'):
         ls = LocalSearch(data, seed)
-        print 'Results for Local Search, S = ', ls.S , ' C(S) ' , ls.C()
+        print 'Results for Local Search, S=', ls.S , ' C(S)=' , ls.cost , ' seed=' , seed
         #print data.file_name , ls.cost
     elif (algorithm == 'sa'):
         sa = SimulatedAnealling(data, seed)
-        print 'Results for Simulated Annealing, S = ', sa.S , ' C(S) ' , sa.C()
+        print 'Results for Simulated Annealing, S=', sa.S , ' C(S)=' , sa.cost , ' seed=' , seed
     else:
         print 'Argumentos inválidos'
     

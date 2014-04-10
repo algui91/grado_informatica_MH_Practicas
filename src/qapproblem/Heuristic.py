@@ -34,9 +34,7 @@ class Heuristic(object):
             if r not in self.S:
                 self.S.append(r)
                 
-        ## TODO: quitar
-        self.C()
-        #print 'Initial Random S =  %s, C(S) = %d, seed = %s\n\n\n' % (self.S, self.cost, self.seed)
+        self.cost = self.C()
                 
     def C(self, S=None):
         '''
@@ -44,7 +42,7 @@ class Heuristic(object):
         Hay que contar el número de búsquedas, limitado a 10000
         '''
         cost = 0
-        
+
         if S is not None:
             s = S 
         else:
@@ -53,8 +51,7 @@ class Heuristic(object):
         for i in xrange(self._tam):
             for j in xrange(self._tam):
                 cost += self._data.stream_matrix[i][j] * self._data.distance_matrix[s[i]][s[j]]
-        
-        self.cost = cost    
+           
         return cost
     
     def swap(self,i,j):
@@ -84,6 +81,8 @@ class Heuristic(object):
         '''
         Performs a swap between two elements in S to produce a neighbor solution
         '''
-
-        return self.swap(random.randint(0,self._tam-1), random.randint(0,self._tam-1))
+        r = random.randint(0,self._tam-1)
+        s = random.randint(0,self._tam-1)
+        
+        return r, s, self.swap(r, s)
         
