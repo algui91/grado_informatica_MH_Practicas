@@ -7,6 +7,9 @@ Created on Apr 1, 2014
 
 Licensed under GPLv3
 '''
+
+from timeit import Timer
+
 from qapproblem.Heuristic import Heuristic
 
 
@@ -26,8 +29,10 @@ class Greedy(Heuristic):
         
         self._delta_distance = self._delta(self._data.distance_matrix)
         self._delta_stream = self._delta(self._data.stream_matrix)
-        
-        self._find_solution()
+
+        def timewrapper():
+            return self._find_solution()
+        self.exec_time = Timer(timewrapper).timeit(number=1)
         
     def _delta(self, matrix):
         '''

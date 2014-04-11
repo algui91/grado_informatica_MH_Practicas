@@ -5,9 +5,10 @@ Created on Apr 4, 2014
 
 Licensed under GPLv3
 '''
-from math import log
 from math import exp
+from math import log
 from random import random
+from timeit import Timer
 
 from qapproblem.Heuristic import Heuristic
 
@@ -40,7 +41,10 @@ class SimulatedAnealling(Heuristic):
         
         
         self.n_eval = 0
-        self.S, self.cost = self._find_solution()
+
+        def timewrapper():
+            return self._find_solution()
+        self.exec_time =  Timer(timewrapper).timeit(number=1)
         
     def _cooling_schedule(self):
         beta = (self.T_0 / self.T_f) / (self.n_iter * self.T_0 * self.T_f)
@@ -71,5 +75,6 @@ class SimulatedAnealling(Heuristic):
                 
             self._cooling_schedule()
             self.n_iter -= 1
-
-        return best_S, best_C 
+            
+        self.S = best_S
+        self.cost = best_C 

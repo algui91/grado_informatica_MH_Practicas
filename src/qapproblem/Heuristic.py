@@ -10,6 +10,7 @@ Licensed under GPLv3
 
 import random
 
+
 class Heuristic(object):
     '''
     Common operations for all implemented Heuristics
@@ -19,6 +20,7 @@ class Heuristic(object):
     S = []
     cost = 0
     seed = 0
+    exec_time = 0
     
     def __init__(self, f_name, seed):
         # Initialize our seed
@@ -60,22 +62,31 @@ class Heuristic(object):
         
         return s
     
-    def deltaC(self, r, s):
+    def deltaC(self, r, s, S=None):
         '''
         Difference between C with values i and j swapped
         '''
+        
+        if S is not None:
+            sol = S 
+        else:
+            sol = self.S
+        
         delta = 0
         for k in xrange(self._tam):
             if k != r and k != s:
                 delta += (self._data.stream_matrix[r][k] \
-                    * (self._data.distance_matrix[self.S[s]][self.S[k]] - self._data.distance_matrix[self.S[r]][self.S[k]]) + \
+                    * (self._data.distance_matrix[sol[s]][sol[k]] - self._data.distance_matrix[sol[r]][sol[k]]) + \
                     self._data.stream_matrix[s][k] \
-                    * (self._data.distance_matrix[self.S[r]][self.S[k]] - self._data.distance_matrix[self.S[s]][self.S[k]]) + \
+                    * (self._data.distance_matrix[sol[r]][sol[k]] - self._data.distance_matrix[sol[s]][sol[k]]) + \
                     self._data.stream_matrix[k][r] \
-                    * (self._data.distance_matrix[self.S[k]][self.S[s]] - self._data.distance_matrix[self.S[k]][self.S[r]]) + \
+                    * (self._data.distance_matrix[sol[k]][sol[s]] - self._data.distance_matrix[sol[k]][sol[r]]) + \
                     self._data.stream_matrix[k][s] \
-                    * (self._data.distance_matrix[self.S[k]][self.S[r]] - self._data.distance_matrix[self.S[k]][self.S[s]]))
+                    * (self._data.distance_matrix[sol[k]][sol[r]] - self._data.distance_matrix[sol[k]][sol[s]]))
         return delta
+
+    def gen_group_of_neighbors(self, number):     
+        return [self.gen_neighbor() for _ in xrange(number)]
 
     def gen_neighbor(self):
         '''

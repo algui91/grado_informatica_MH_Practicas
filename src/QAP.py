@@ -13,6 +13,7 @@ from qapproblem.Data import Data
 from qapproblem.Greedy import Greedy
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.SimulatedAnealling import SimulatedAnealling
+from qapproblem.TabuSearch import TabuSearch
 
 
 def main(): 
@@ -27,20 +28,32 @@ def main():
     
     data_file = args.data_file
     algorithm =  args.algorithm.strip().lower()
+    verbose = args.verbose
     seed = args.seed
     
     data = Data(data_file)
     
     if (algorithm == 'greedy'):
         greedy = Greedy(data, seed)
-        print 'Results for Greedy, S=', greedy.cost , ' C(S)=' , greedy.S , ' seed=' , seed
+        if verbose:
+            print 'Results for Greedy, S=', greedy.cost , ' C(S)=' , greedy.S , ' seed=' , seed
+        else:
+            print greedy.cost, greedy.exec_time, data_file, seed
     elif (algorithm == 'local_search'):
         ls = LocalSearch(data, seed)
-        print 'Results for Local Search, S=', ls.S , ' C(S)=' , ls.cost , ' seed=' , seed
-        #print data.file_name , ls.cost
+        if verbose:
+            print 'Results for Local Search, S=', ls.S , ' C(S)=' , ls.cost , ' seed=' , seed
+        else:
+            print ls.cost, ls.exec_time, data_file, seed
     elif (algorithm == 'sa'):
         sa = SimulatedAnealling(data, seed)
-        print 'Results for Simulated Annealing, S=', sa.S , ' C(S)=' , sa.cost , ' seed=' , seed
+        if verbose:
+            print 'Results for Simulated Annealing, S=', sa.S , ' C(S)=' , sa.cost , ' seed=' , seed
+        else:
+            print sa.cost, sa.exec_time, data_file, seed
+    elif (algorithm == 'ts'):
+        ts = TabuSearch(data, seed)
+        print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed
     else:
         print 'Argumentos inválidos'
     

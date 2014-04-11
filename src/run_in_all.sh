@@ -1,6 +1,22 @@
-s=$RANDOM
+s=385806854
+s=$(od -vAn -N4 -tu4 < /dev/urandom)
+s=1006087674
 
-for i in `ls data/*.dat`
+ficheros="els19.dat chr20a.dat chr25a.dat nug25.dat bur26a.dat bur26b.dat tai30a.dat tai30b.dat esc32a.dat kra32.dat tai35a.dat tai35b.dat tho40.dat tai40a.dat sko42.dat sko49.dat tai50a.dat tai50b.dat tai60a.dat lipa90a.dat"
+
+for i in $ficheros
 do
-    python QAP.py -d $i -a local_search -s $s
+    python QAP.py -d "data/"$i -a local_search -s $s
+done
+
+echo "\n\n\n\n\n\n\n"
+
+for i in $ficheros
+do
+    python QAP.py -d "data/"$i -a sa -s $s
+done
+echo "fdsfdsafjdsaklfdjsflksa"
+for i in $ficheros
+do
+    python QAP.py -d "data/"$i -a greedy -s $s
 done

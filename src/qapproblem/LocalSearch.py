@@ -5,7 +5,10 @@ Created on Apr 2, 2014
 
 Licensed under GPLv3
 '''
+from timeit import Timer
+
 from qapproblem.Heuristic import Heuristic
+
 
 class LocalSearch(Heuristic):
     '''
@@ -18,7 +21,10 @@ class LocalSearch(Heuristic):
         '''
         super(LocalSearch, self).__init__(f_name, seed)
         self._DLB = [0] * self._data.tam
-        self._find_solution()
+        
+        def timewrapper():
+            return self._find_solution()
+        self.exec_time =  Timer(timewrapper).timeit(number=1)
         
     def _find_solution(self):
         for i in xrange(self._tam):
