@@ -9,7 +9,9 @@ Licensed under GPLv3
 '''
 
 import random
+import numpy as np
 
+from operator import itemgetter
 
 class Heuristic(object):
     '''
@@ -67,26 +69,51 @@ class Heuristic(object):
         Difference between C with values i and j swapped
         '''
         
+        #=======================================================================
+        #         delta += (self._data.stream_matrix.item(r,k) \
+        #             * (self._data.distance_matrix.item(sol_s,sol[k]) - self._data.distance_matrix.item(sol_r,sol[k])) + \
+        #             self._data.stream_matrix.item(s,k) \
+        #             * (self._data.distance_matrix.item(sol_r,sol[k]) - self._data.distance_matrix.item(sol_s,sol[k])) + \
+        #             self._data.stream_matrix.item(k,r) \
+        #             * (self._data.distance_matrix.item(sol[k],sol_s) - self._data.distance_matrix.item(sol[k],sol_r)) + \
+        #             self._data.stream_matrix.item(k,s) \
+        #             * (self._data.distance_matrix.item(sol[k],sol_r) - self._data.distance_matrix.item(sol[k],sol_s)))
+        # 
+        #=======================================================================
+        
         if S is not None:
             sol = S 
         else:
             sol = self.S
-        
+
         delta = 0
+
+        sol_r, sol_s = sol[r], sol[s]
+
         for k in xrange(self._tam):
             if k != r and k != s:
                 delta += (self._data.stream_matrix[r][k] \
-                    * (self._data.distance_matrix[sol[s]][sol[k]] - self._data.distance_matrix[sol[r]][sol[k]]) + \
+                    * (self._data.distance_matrix[sol_s][sol[k]] - self._data.distance_matrix[sol_r][sol[k]]) + \
                     self._data.stream_matrix[s][k] \
-                    * (self._data.distance_matrix[sol[r]][sol[k]] - self._data.distance_matrix[sol[s]][sol[k]]) + \
+                    * (self._data.distance_matrix[sol_r][sol[k]] - self._data.distance_matrix[sol_s][sol[k]]) + \
                     self._data.stream_matrix[k][r] \
-                    * (self._data.distance_matrix[sol[k]][sol[s]] - self._data.distance_matrix[sol[k]][sol[r]]) + \
+                    * (self._data.distance_matrix[sol[k]][sol_s] - self._data.distance_matrix[sol[k]][sol_r]) + \
                     self._data.stream_matrix[k][s] \
-                    * (self._data.distance_matrix[sol[k]][sol[r]] - self._data.distance_matrix[sol[k]][sol[s]]))
+                    * (self._data.distance_matrix[sol[k]][sol_r] - self._data.distance_matrix[sol[k]][sol_s]))
         return delta
 
-    def gen_group_of_neighbors(self, number):     
-        return [self.gen_neighbor() for _ in xrange(number)]
+    def gen_group_of_neighbors(self, number): 
+              
+        neig = np.arange(number)
+          
+        for _ in xrange(number):
+            r = random.randint(0,self._tam-1)
+            s = random.randint(0,self._tam-1)
+            neig.append([r,s, self.deltaC(r, s)])
+
+        neig.sort(key=itemgetter(2))
+        
+        return neig
 
     def gen_neighbor(self):
         '''

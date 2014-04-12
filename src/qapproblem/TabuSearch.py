@@ -44,7 +44,6 @@ class TabuSearch(Heuristic):
         while n_iter < self.n_iters:
             # Generate a group of neighbors
             neighbors = self.gen_group_of_neighbors(self.neighbors_per_iter)
-            #neighbors.sort(key=functools.cmp_to_key(self._compare_costs))
             neig_picked = False
             
             neig_counter = 0
@@ -54,8 +53,8 @@ class TabuSearch(Heuristic):
                 tabu_element = (
                                 r, # index swaped
                                 s, # index swaped
-                                neighbors[neig_counter][2][r],
-                                neighbors[neig_counter][2][s]
+                                self.S[r],
+                                self.S[s]
                                 )
                 if ((not self._is_tabu(tabu_element)) or self._aspiration_criterion(best_S, r, s)):
                     neig_picked = True
@@ -110,17 +109,3 @@ class TabuSearch(Heuristic):
                  (neig[1] == self.tabu_list[i][0] and neig[3] == self.tabu_list[i][2])):
                 return True
         return False
-                
-    def _compare_costs(self, a, b):
-        r_a, s_a = a[0], a[1]
-        r_b, s_b = b[0], b[1]
-        
-        delta_a = self.deltaC(r_a, s_a)
-        delta_b =self.deltaC(r_b, s_b)
-        
-        if ( delta_a < delta_b):
-            return -1
-        elif (delta_a == delta_b):
-            return 0
-        else:
-            return 1

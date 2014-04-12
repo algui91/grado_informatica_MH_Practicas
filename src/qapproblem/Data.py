@@ -47,4 +47,5 @@ class Data:
         row = []
         for i in xrange(start, stop, n):
             row.append(l[i:i+n])
+            
         return row
