@@ -6,6 +6,8 @@ Created on Apr 1, 2014
 Licensed under GPLv3
 '''
 
+import numpy as np
+
 class Data:
     '''
     Class representing a QAP problem data, with the two matrix representing

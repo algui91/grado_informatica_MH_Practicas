@@ -38,19 +38,19 @@ def main():
         if verbose:
             print 'Results for Greedy, S=', greedy.cost , ' C(S)=' , greedy.S , ' seed=' , seed
         else:
-            print greedy.cost, greedy.exec_time, data_file, seed
+            print greedy.cost, '\t\t',  greedy.exec_time#, data_file, seed
     elif (algorithm == 'local_search'):
         ls = LocalSearch(data, seed)
         if verbose:
             print 'Results for Local Search, S=', ls.S , ' C(S)=' , ls.cost , ' seed=' , seed
         else:
-            print ls.cost, ls.exec_time, data_file, seed
+            print ls.cost, '\t\t', ls.exec_time#, data_file, seed
     elif (algorithm == 'sa'):
         sa = SimulatedAnealling(data, seed)
         if verbose:
             print 'Results for Simulated Annealing, S=', sa.S , ' C(S)=' , sa.cost , ' seed=' , seed
         else:
-            print sa.cost, sa.exec_time, data_file, seed
+            print sa.cost, '\t\t', sa.exec_time#, data_file, seed
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed

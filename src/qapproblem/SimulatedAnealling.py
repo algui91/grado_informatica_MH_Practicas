@@ -47,7 +47,7 @@ class SimulatedAnealling(Heuristic):
         self.exec_time =  Timer(timewrapper).timeit(number=1)
         
     def _cooling_schedule(self):
-        beta = (self.T_0 / self.T_f) / (self.n_iter * self.T_0 * self.T_f)
+        beta = (self.T_0 - self.T_f) / (self.n_iter * self.T_0 * self.T_f)
         self.T = self.T / (1 + beta * self.T)
     
     def _find_solution(self):

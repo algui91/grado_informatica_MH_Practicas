@@ -39,7 +39,7 @@ class Heuristic(object):
                 self.S.append(r)
                 
         self.cost = self.C()
-                
+                        
     def C(self, S=None):
         '''
         Cost of the solution with permutation S
@@ -64,53 +64,132 @@ class Heuristic(object):
         
         return s
     
-    def deltaC(self, r, s, S=None):
+    #===========================================================================
+    # def deltaC2(self, r, s, sol=None):
+    #     delta = 0
+    #     
+    #     sol = self.S if sol is None else self.S
+    #     sol_r, sol_s = sol[r], sol[s]
+    # 
+    #     if r==s:
+    #         K=np.arange(self._tam-1)
+    #         K[r:] += 1
+    #     else:
+    #         K=np.arange(self._tam-2)
+    #         if r<s:
+    #             K[r:] += 1
+    #             K[s-1:] += 1
+    #         else:
+    #             K[s:] += 1
+    #             K[r-1:] += 1
+    #             
+    #     stream_matrix_np = self._data.stream_matrix
+    #     distance_matrix_np = self._data.distance_matrix
+    # 
+    #     return np.sum(
+    #         (stream_matrix_np[r,K] - stream_matrix_np[s,K]) \
+    #         *  (distance_matrix_np[sol_s,sol[K]] - distance_matrix_np[sol_r,sol[K]]) + \
+    #         (stream_matrix_np[K,r] - stream_matrix_np[K,s]) \
+    #         * (distance_matrix_np[sol[K],sol_s] - distance_matrix_np[sol[K],sol_r]))
+    #===========================================================================
+
+    def deltaC(self, r, s, sol=None):
+        delta = 0
+        sol = self.S if sol is None else self.S
+        sol_r, sol_s = sol[r], sol[s]
+        
+        stream_matrix = self._data.stream_matrix
+        distance_matrix = self._data.distance_matrix
+        
+        for k in xrange(self._tam):
+            if k != r and k != s:
+                sol_k = sol[k]
+                delta += \
+                    (stream_matrix[r][k] - stream_matrix[s][k]) \
+                    * (distance_matrix[sol_s][sol_k] - distance_matrix[sol_r][sol_k]) \
+                    + \
+                    (stream_matrix[k][r] - stream_matrix[k][s]) \
+                    * (distance_matrix[sol_k][sol_s] - distance_matrix[sol_k][sol_r])
+        return delta
+
+    def deltaC3(self, r, s, sol=None):
+        delta = 0
+        sol = self.S if sol is None else self.S
+        sol = np.array(sol)
+        sol_r, sol_s = sol[r], sol[s]
+    
+        if r==s:
+            K=np.arange(self._tam-1)
+            K[r:] += 1
+        else:
+            K=np.arange(self._tam-2)
+            if r<s:
+                K[r:] += 1
+                K[s-1:] += 1
+            else:
+                K[s:] += 1
+                K[r-1:] += 1
+    
+        stream_matrix_np = self._data.stream_matrix
+        distance_matrix_np = self._data.distance_matrix
+    
+        return np.sum(
+            (stream_matrix_np[r,K] - stream_matrix_np[s,K]) \
+            *  (distance_matrix_np[sol_s,sol[K]] - distance_matrix_np[sol_r,sol[K]]) + \
+            (stream_matrix_np[K,r] - stream_matrix_np[K,s]) \
+            * (distance_matrix_np[sol[K],sol_s] - distance_matrix_np[sol[K],sol_r]))
+
+    def deltaC4(self, r, s, sol=None):
+        delta = 0
+        sol = self.S if sol is None else self.S
+        sol = np.array(sol)
+        sol_r, sol_s = sol[r], sol[s]
+    
+        stream_matrix_np = self._data.stream_matrix
+        distance_matrix_np = self._data.distance_matrix
+    
+        K = np.array([i for i in xrange(self._tam) if i!=r and i!=s])
+    
+        return np.sum(
+            (stream_matrix_np[r,K] - stream_matrix_np[s,K]) \
+            *  (distance_matrix_np[sol_s,sol[K]] - distance_matrix_np[sol_r,sol[K]]) + \
+            (stream_matrix_np[K,r] - stream_matrix_np[K,s]) \
+            * (distance_matrix_np[sol[K],sol_s] - distance_matrix_np[sol[K],sol_r]))
+    
+    
+    def deltaC2(self, r, s, S=None):
         '''
         Difference between C with values i and j swapped
         '''
-        
-        #=======================================================================
-        #         delta += (self._data.stream_matrix.item(r,k) \
-        #             * (self._data.distance_matrix.item(sol_s,sol[k]) - self._data.distance_matrix.item(sol_r,sol[k])) + \
-        #             self._data.stream_matrix.item(s,k) \
-        #             * (self._data.distance_matrix.item(sol_r,sol[k]) - self._data.distance_matrix.item(sol_s,sol[k])) + \
-        #             self._data.stream_matrix.item(k,r) \
-        #             * (self._data.distance_matrix.item(sol[k],sol_s) - self._data.distance_matrix.item(sol[k],sol_r)) + \
-        #             self._data.stream_matrix.item(k,s) \
-        #             * (self._data.distance_matrix.item(sol[k],sol_r) - self._data.distance_matrix.item(sol[k],sol_s)))
-        # 
-        #=======================================================================
-        
-        if S is not None:
-            sol = S 
-        else:
-            sol = self.S
+       
+        sol = self.S if S is None else S
 
         delta = 0
 
         sol_r, sol_s = sol[r], sol[s]
 
+        stream_matrix = self._data.stream_matrix
+        distance_matrix = self._data.distance_matrix
+
         for k in xrange(self._tam):
             if k != r and k != s:
-                delta += (self._data.stream_matrix[r][k] \
-                    * (self._data.distance_matrix[sol_s][sol[k]] - self._data.distance_matrix[sol_r][sol[k]]) + \
-                    self._data.stream_matrix[s][k] \
-                    * (self._data.distance_matrix[sol_r][sol[k]] - self._data.distance_matrix[sol_s][sol[k]]) + \
-                    self._data.stream_matrix[k][r] \
-                    * (self._data.distance_matrix[sol[k]][sol_s] - self._data.distance_matrix[sol[k]][sol_r]) + \
-                    self._data.stream_matrix[k][s] \
-                    * (self._data.distance_matrix[sol[k]][sol_r] - self._data.distance_matrix[sol[k]][sol_s]))
+                sol_k = sol[k]
+                delta += (stream_matrix[r][k] \
+                    * (distance_matrix[sol_s][sol_k] - distance_matrix[sol_r][sol_k]) + \
+                    stream_matrix[s][k] \
+                    * (distance_matrix[sol_r][sol_k] - distance_matrix[sol_s][sol_k]) + \
+                    stream_matrix[k][r] \
+                    * (distance_matrix[sol_k][sol_s] - distance_matrix[sol_k][sol_r]) + \
+                    stream_matrix[k][s] \
+                    * (distance_matrix[sol_k][sol_r] - distance_matrix[sol_k][sol_s]))
         return delta
 
     def gen_group_of_neighbors(self, number): 
-              
-        neig = np.arange(number)
-          
-        for _ in xrange(number):
-            r = random.randint(0,self._tam-1)
-            s = random.randint(0,self._tam-1)
-            neig.append([r,s, self.deltaC(r, s)])
-
+        
+        r, s = np.random.randint(0, self._tam, (2, number))
+        p = zip(r, s)
+        neig = [[p, q, self.deltaC(p, q)] for p, q in zip(r, s)]
+        
         neig.sort(key=itemgetter(2))
         
         return neig

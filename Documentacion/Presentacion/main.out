@@ -1,0 +1,7 @@
+\BOOKMARK [2][]{Outline0.1}{Compilar\040e\040instalar\040nginx}{}% 1
+\BOOKMARK [3][]{Outline0.1.1.3}{Preparando\040el\040entorno}{Outline0.1}% 2
+\BOOKMARK [3][]{Outline0.1.2.7}{Configurar\040y\040compilar}{Outline0.1}% 3
+\BOOKMARK [2][]{Outline0.2}{Instalar\040PHP-FPM}{}% 4
+\BOOKMARK [3][]{Outline0.2.1.11}{Añadir repositorios}{Outline0.2}% 5
+\BOOKMARK [2][]{Outline0.3}{Calcular el número de procesos necesarios}{}% 6
+\BOOKMARK [3][]{Outline0.3.1.15}{Calcular\040max_children}{Outline0.3}% 7

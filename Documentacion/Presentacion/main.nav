@@ -1,0 +1,55 @@
+\beamer@endinputifotherversion {3.24pt}
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\sectionentry {1}{Compilar e instalar nginx}{3}{Compilar e instalar nginx}{0}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{3}{Preparando el entorno}}\headcommand {\beamer@subsectionpages {3}{2}}
+\headcommand {\slideentry {1}{1}{1}{3/3}{Preparando el entorno}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\slideentry {1}{1}{2}{4/6}{Preparando el entorno}{0}}
+\headcommand {\beamer@framepages {4}{6}}
+\headcommand {\beamer@subsectionentry {0}{1}{2}{7}{Configurar y compilar}}\headcommand {\beamer@subsectionpages {3}{6}}
+\headcommand {\slideentry {1}{2}{1}{7/7}{Configurar y compilar}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {1}{2}{2}{8/10}{Configurar y compilar}{0}}
+\headcommand {\beamer@framepages {8}{10}}
+\headcommand {\sectionentry {2}{Instalar PHP-FPM}{11}{Instalar PHP-FPM}{0}}
+\headcommand {\beamer@sectionpages {3}{10}}
+\headcommand {\beamer@subsectionpages {7}{10}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{11}{Añadir repositorios}}\headcommand {\beamer@subsectionpages {11}{10}}
+\headcommand {\slideentry {2}{1}{1}{11/11}{Añadir repositorios}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\slideentry {2}{1}{2}{12/14}{Añadir repositorios}{0}}
+\headcommand {\beamer@framepages {12}{14}}
+\headcommand {\sectionentry {3}{Calcular el número de procesos necesarios}{15}{Calcular el número de procesos necesarios}{0}}
+\headcommand {\beamer@sectionpages {11}{14}}
+\headcommand {\beamer@subsectionpages {11}{14}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{15}{Calcular max\_children}}\headcommand {\beamer@subsectionpages {15}{14}}
+\headcommand {\slideentry {3}{1}{1}{15/15}{Calcular max\_children}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\slideentry {3}{1}{2}{16/18}{Calcular max\_children}{0}}
+\headcommand {\beamer@framepages {16}{18}}
+\headcommand {\sectionentry {4}{Resumen}{19}{Resumen}{0}}
+\headcommand {\beamer@sectionpages {15}{18}}
+\headcommand {\beamer@subsectionpages {15}{18}}
+\headcommand {\slideentry {4}{0}{3}{19/19}{}{0}}
+\headcommand {\beamer@framepages {19}{19}}
+\headcommand {\partentry {\translate {Appendix}}{1}}
+\headcommand {\beamer@partpages {1}{19}}
+\headcommand {\beamer@sectionpages {19}{19}}
+\headcommand {\beamer@subsectionpages {19}{19}}
+\headcommand {\beamer@appendixpages {20}}
+\headcommand {\sectionentry {5}{\translate {Appendix}}{20}{\translate {Appendix}}{1}}
+\headcommand {\beamer@sectionpages {20}{19}}
+\headcommand {\beamer@subsectionpages {20}{19}}
+\headcommand {\beamer@subsectionentry {1}{5}{1}{20}{Referencias}}\headcommand {\beamer@subsectionpages {20}{19}}
+\headcommand {\slideentry {5}{1}{1}{20/20}{Referencias}{1}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\beamer@partpages {20}{20}}
+\headcommand {\beamer@subsectionpages {20}{20}}
+\headcommand {\beamer@sectionpages {20}{20}}
+\headcommand {\beamer@documentpages {20}}
+\headcommand {\def \inserttotalframenumber {12}}
