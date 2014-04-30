@@ -34,7 +34,7 @@ class Heuristic(object):
         
     def _gen_random_sol(self):
         while len(self.S) < self._tam:
-            r = random.randint(0,self._tam-1)
+            r = random.randint(0, self._tam - 1)
             if r not in self.S:
                 self.S.append(r)
                 
@@ -52,13 +52,15 @@ class Heuristic(object):
         else:
             s = self.S
         
+        #self.S = map(int,"2 19 6 17 8 11 18 3 9 10 0 5 14 7 1 4 13 15 12 16".split())
+        
         for i in xrange(self._tam):
             for j in xrange(self._tam):
                 cost += self._data.stream_matrix[i][j] * self._data.distance_matrix[s[i]][s[j]]
-           
+
         return cost
     
-    def swap(self,i,j):
+    def swap(self, i, j):
         s = list(self.S)
         s[i], s[j] = s[j], s[i]
         
@@ -66,22 +68,21 @@ class Heuristic(object):
 
     def deltaC(self, r, s, sol=None):
         delta = 0
-        sol = self.S if sol is None else self.S
+        if sol == None:
+            sol = self.S
         sol_r, sol_s = sol[r], sol[s]
         
-        stream_matrix = self._data.stream_matrix
-        distance_matrix = self._data.distance_matrix
-        
+        f = self._data.stream_matrix
+        d = self._data.distance_matrix
+
         indexes = set(xrange(self._tam)) - set([r, s])
 
         for k in indexes:
             sol_k = sol[k]
-            delta += \
-                (stream_matrix[r][k] - stream_matrix[s][k]) \
-                * (distance_matrix[sol_s][sol_k] - distance_matrix[sol_r][sol_k]) \
-                + \
-                (stream_matrix[k][r] - stream_matrix[k][s]) \
-                * (distance_matrix[sol_k][sol_s] - distance_matrix[sol_k][sol_r])
+            delta += f[r][k] * (d[sol_s][sol_k] - d[sol_r][sol_k]) + \
+    				 f[s][k] * (d[sol_r][sol_k] - d[sol_s][sol_k]) + \
+    				 f[k][r] * (d[sol_k][sol_s] - d[sol_k][sol_r]) + \
+    				 f[k][s] * (d[sol_k][sol_r] - d[sol_k][sol_s])
         return delta
 
     def gen_group_of_neighbors(self, number): 
@@ -98,8 +99,8 @@ class Heuristic(object):
         '''
         Performs a swap between two elements in S to produce a neighbor solution
         '''
-        r = random.randint(0,self._tam-1)
-        s = random.randint(0,self._tam-1)
+        r = random.randint(0, self._tam - 1)
+        s = random.randint(0, self._tam - 1)
         
         return r, s, self.swap(r, s)
         
