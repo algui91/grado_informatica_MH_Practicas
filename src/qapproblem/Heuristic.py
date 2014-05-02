@@ -30,15 +30,29 @@ class Heuristic(object):
         self.seed = seed
         self._data = f_name
         self._tam = self._data.tam
-        self._gen_random_sol()
+        self.gen_random_sol()
         
-    def _gen_random_sol(self):
+    def gen_random_sol(self):
         while len(self.S) < self._tam:
             r = random.randint(0, self._tam - 1)
             if r not in self.S:
                 self.S.append(r)
                 
         self.cost = self.C()
+        
+    def get_random_sol(self):
+        
+        s = []
+        tam = self._tam
+        tam_gen = tam-1
+        randint = random.randint
+        append = s.append
+        
+        while len(s) < tam:
+            r = randint(0, tam_gen)
+            if r not in s:
+                append(r)
+        return s
                         
     def C(self, S=None):
         '''
@@ -52,7 +66,7 @@ class Heuristic(object):
         else:
             s = self.S
         
-        #self.S = map(int,"2 19 6 17 8 11 18 3 9 10 0 5 14 7 1 4 13 15 12 16".split())
+        # self.S = map(int,"2 19 6 17 8 11 18 3 9 10 0 5 14 7 1 4 13 15 12 16".split())
         
         for i in xrange(self._tam):
             for j in xrange(self._tam):
@@ -79,6 +93,16 @@ class Heuristic(object):
 
         for k in indexes:
             sol_k = sol[k]
+            f_rk = f[r][k]
+            f_sk = f[s][k]
+            f_kr = f[k][r]
+            f_ks = f[k][s]
+            d_sol_sk = d[sol_s][sol_k]
+            d_sol_rk = d[sol_r][sol_k]
+            d_sol_ks = d[sol_k][sol_s]
+            d_sol_kr = d[sol_k][sol_r]
+            
+            
             delta += f[r][k] * (d[sol_s][sol_k] - d[sol_r][sol_k]) + \
     				 f[s][k] * (d[sol_r][sol_k] - d[sol_s][sol_k]) + \
     				 f[k][r] * (d[sol_k][sol_s] - d[sol_k][sol_r]) + \

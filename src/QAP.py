@@ -14,6 +14,7 @@ from qapproblem.Greedy import Greedy
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.SimulatedAnealling import SimulatedAnealling
 from qapproblem.TabuSearch import TabuSearch
+from qapproblem.BMB import BMB
 
 
 def main(): 
@@ -51,6 +52,12 @@ def main():
             print 'Results for Simulated Annealing, S=', sa.S , ' C(S)=' , sa.cost , ' seed=' , seed
         else:
             print sa.cost, '\t\t', sa.exec_time#, data_file, seed
+    elif (algorithm == 'bmb'):
+        bmb = BMB(data, seed)
+        if verbose:
+            print 'Results for BMB, S=', bmb.S , ' C(S)=' , bmb.cost , ' seed=' , seed
+        else:
+            print bmb.cost, '\t\t', bmb.exec_time
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed
