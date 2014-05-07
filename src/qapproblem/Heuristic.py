@@ -127,4 +127,41 @@ class Heuristic(object):
         s = random.randint(0, self._tam - 1)
         
         return r, s, self.swap(r, s)
+    
+    def local_search(self, s):
+
+        num_eval = 0
+        max_evals = 10000
+        improve_flag = True
+        self._DLB = [0] * self._data.tam
+        _DLB = self._DLB 
+        self.S = s
+        self.cost = self.C()
+        tam = self._tam
+        deltaC = self.deltaC
+        swap = self.swap
+        cost = self.cost
+        S = self.S
+        
+        while num_eval < max_evals and improve_flag:
+            improve_flag = False
+            i = 0
+            while i < tam and not improve_flag:
+                if _DLB[i] == 0:
+                    j = 0
+                    while j < tam and not improve_flag:
+                        improvement = deltaC(i, j)
+                        num_eval += 1
+                        if (improvement < 0):
+                            cost += improvement
+                            S = swap(i, j)
+                            _DLB[i] = _DLB[j] = 0
+                            improve_flag = True
+                        j += 1
+                    if not improve_flag:
+                        _DLB[i] = 1
+                i += 1
+        #print 'Veces llamada ' , num_eval
+        
+        return self.S, self.cost
         
