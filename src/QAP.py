@@ -11,12 +11,13 @@ import argparse
 
 from qapproblem.BMB import BMB
 from qapproblem.Data import Data
+from qapproblem.Genetic import AGG
 from qapproblem.Grasp import Grasp
 from qapproblem.Greedy import Greedy
+from qapproblem.ILS import ILS
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.SimulatedAnealling import SimulatedAnealling
 from qapproblem.TabuSearch import TabuSearch
-from qapproblem.ILS import ILS
 
 
 def main(): 
@@ -72,6 +73,12 @@ def main():
             print 'Results for ILS, S=', ils.S , ' C(S)=' , ils.cost , ' seed=' , seed
         else:
             print ils.cost, '\t\t', ils.exec_time
+    elif (algorithm == 'agg'):
+        agg = AGG(data, seed)
+        if verbose:
+            print 'Results for AGG, S=', ' C(S)=' , agg.cost , ' seed=' , seed
+        else:
+            print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed
