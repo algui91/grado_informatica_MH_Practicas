@@ -8,10 +8,12 @@ Licensed under GPLv3
 
 import math
 from operator import itemgetter
-import random
+from random import randint
+from random import shuffle
 from timeit import Timer
 
 from qapproblem.Heuristic import Heuristic
+from qapproblem.LocalSearch import LocalSearch
 
 
 class AGG(Heuristic):
@@ -27,11 +29,8 @@ class AGG(Heuristic):
     current_population = []
     old_population = [0] * population_lenght
     best_current_cost = 10**10
-#    worst_current_cost = 0
     best_guy = []
-#    worst_guy = []
     index_best_guy = 0
-#    index_worst_guy = 0
     
     def __init__(self, f_name, seed):
         super(AGG, self).__init__(f_name, seed)
@@ -62,6 +61,9 @@ class AGG(Heuristic):
         self.S = self.best_guy[2]
         self.cost = self.best_current_cost
         
+        local_search = LocalSearch(self._data, self.seed, self.S, self.cost)
+        print "La local Search " , local_search.cost
+        
     def initPopulation(self):
         '''
         Randomly generate the initial population
@@ -78,7 +80,6 @@ class AGG(Heuristic):
         '''
         population = self.current_population
         C = self.C
-        stop_criteria = self.stop_crit
         
         for i in xrange(self.population_lenght):
             p = population[i]
@@ -86,7 +87,6 @@ class AGG(Heuristic):
                 p[1] = C(p[2])
                 self.stop_crit -= 1
                 p[0] = 0 # mark it as evaluated
-                stop_criteria -= 1
             if p[1] < self.best_current_cost:
                 self.best_guy = p
                 self.best_current_cost = p[1]
@@ -96,19 +96,26 @@ class AGG(Heuristic):
         '''
         Select two individuals by tournament
         '''
-
         for i in xrange(self.population_lenght):
             
             population_length = self.population_lenght - 1
+
+            i_guy1 = randint(0,population_length)
+            i_guy2 = randint(0,population_length)
             
-            guy1 = random.randint(0,population_length)
-            guy2 = random.randint(0,population_length)
+            guy1 = self.old_population[i_guy1]
+            guy2 = self.old_population[i_guy2]
             
-            cost1, cost2 = self.old_population[guy1][1], self.old_population[guy2][1] 
+            while guy1 == guy2:
+                i_guy2 = randint(0,population_length)
+                guy2 = self.old_population[i_guy2]
+            
+            cost1, cost2 = guy1[1], guy2[1] 
+
             if cost1 < cost2:
-                self.current_population[i] = list(self.old_population[guy1])
+                self.current_population[i] = list(guy1)
             else:
-                self.current_population[i] = list(self.old_population[guy2])  
+                self.current_population[i] = list(guy2)  
         
     def cross(self):
         '''
@@ -116,30 +123,18 @@ class AGG(Heuristic):
         with position based crossing operator
         '''
         
-        for i in xrange(self.how_many_cross):
+        for i in xrange(0, self.how_many_cross, 2):
             parent1 = self.current_population[i][2]
             parent2 = self.current_population[i+1][2]
             
-            child = [0] * self.n
-            
-            no_match = []
-            index_no_match = []            
-            for k in xrange(self.n):
-                if parent1[k] == parent2[k]:
-                    child[k] = parent1[k]
-                else:
-                    no_match.append(parent1[k])
-                    index_no_match.append(k)
-            
-            random.shuffle(no_match)
-            
-            k = 0
-            for j in index_no_match:
-                child[j] = no_match[k]
-                k += 1 
+            child1, child2 = self.get_two_childs(parent1,parent2)
+                
             # Add the child to the population and mark it as need to evaluate
-            self.current_population[i][2] = list(child)
-            self.current_population[i][0] = 1
+            if child1 != -1:
+                self.current_population[i][2] = list(child1)
+                self.current_population[i][0] = 1
+                self.current_population[i+1][2] = list(child2)
+                self.current_population[i+1][0] = 1
     
     def mutate(self):
         '''
@@ -147,11 +142,11 @@ class AGG(Heuristic):
         '''
 
         for _ in xrange(self.how_many_mutate):
-            i = random.randint(0, self.population_lenght-1)
-            j = random.randint(0, self.n-1)
+            i = randint(0, self.population_lenght-1)
+            j = randint(0, self.n-1)
             
             # Apply mutation to the gene
-            y = random.randint(0, self.n-1)
+            y = randint(0, self.n-1)
 
             self.current_population[i][2][j],self.current_population[i][2][y] = self.current_population[i][2][y],self.current_population[i][2][j] 
             self.current_population[i][0] = 1 # Mark as need to evaluate
@@ -169,3 +164,44 @@ class AGG(Heuristic):
             wort_guy = pop_sort[self.population_lenght-1]
             self.current_population[self.current_population.index(wort_guy)] = list(self.best_guy)
     
+    def get_two_childs(self, p1, p2):
+        '''
+        Returns two childs for the two parents selected by tournament
+        '''
+        childs = []
+        
+        child = [0] * self.n
+        no_match = []
+        index_no_match = []    
+                
+        for k in xrange(self.n):
+            if p1[k] == p2[k]:
+                child[k] = p1[k]
+            else:
+                no_match.append(p1[k])
+                index_no_match.append(k)
+                
+        clean_child = list(child) # A list with only matching items from parents
+        
+        append_child = childs.append
+        if no_match:
+            for _ in xrange(2):
+                old_n_match = list(no_match)
+                shuffle(no_match)
+                # We do not want two children be the same
+                while old_n_match == no_match:
+                    shuffle(no_match)
+                    
+                k = 0
+                for j in index_no_match:
+                    child[j] = no_match[k]
+                    k += 1
+                    
+                append_child(child)
+                child = list(clean_child)
+        else:
+            # The children are the same as the parent
+            append_child(-1)
+            append_child(-1)
+            
+        return childs

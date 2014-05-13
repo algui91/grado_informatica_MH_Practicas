@@ -15,13 +15,15 @@ class LocalSearch(Heuristic):
     Local Search with Don't look bits
     '''
 
-    def __init__(self, f_name, seed):
+    def __init__(self, f_name, seed, S, Cost):
         '''
         Constructor
         '''
         super(LocalSearch, self).__init__(f_name, seed)
         self._DLB = [0] * self._data.tam
 
+        self.S = S
+        self.cost = Cost
         def timewrapper():
             return self.find_solution()
         self.exec_time =  Timer(timewrapper).timeit(number=1)
