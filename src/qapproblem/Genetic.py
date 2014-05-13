@@ -10,57 +10,32 @@ import math
 from operator import itemgetter
 from random import randint
 from random import shuffle
-from timeit import Timer
 
 from qapproblem.Heuristic import Heuristic
-from qapproblem.LocalSearch import LocalSearch
 
-
-class AGG(Heuristic):
+class GG_Base(Heuristic):
     '''
-    Elitist Genetic Algorithm with position based crossing operator
+    Base Class for Genetic Algorithm
     '''
     population_lenght = 50
-    cross_prob = .7  # 1 for AGO
+    cross_prob = .7 # 1 for EGG
     mutation_prob = .01
     stop_crit = 20000
     how_many_cross = int(math.ceil(cross_prob * (population_lenght / 2)))
     
     current_population = []
     old_population = [0] * population_lenght
-    best_current_cost = 10**10
+    best_current_cost = 10 ** 10
     best_guy = []
     index_best_guy = 0
     
     def __init__(self, f_name, seed):
-        super(AGG, self).__init__(f_name, seed)
+        super(GG_Base, self).__init__(f_name, seed)
         
         self.n = self._tam
         self.num_genes = self.population_lenght * self.n 
         # How many will mutate (genes per individual  * num individual * prob mutation) 
-        self.how_many_mutate = int(math.ceil(self.num_genes * self.mutation_prob))
-        
-        def timewrapper():
-            return self._find_solution()
-        self.exec_time = Timer(timewrapper).timeit(number=1)                    
-            
-    def _find_solution(self):
-        
-        self.initPopulation()
-        self.evaluate()
-        
-        while self.stop_crit >= 0:
-            # swap current and old population
-            self.old_population, self.current_population = self.current_population, self.old_population
-            self.select()
-            self.cross()
-            self.mutate()
-            self.reemplace()
-            self.evaluate()
-        
-        self.S = self.best_guy[2]
-        self.cost = self.best_current_cost
-        
+        self.how_many_mutate = int(math.ceil(self.num_genes * self.mutation_prob))                    
         
     def initPopulation(self):
         '''
@@ -81,10 +56,10 @@ class AGG(Heuristic):
         
         for i in xrange(self.population_lenght):
             p = population[i]
-            if p[0]: # need to re-evaluate
+            if p[0]:  # need to re-evaluate
                 p[1] = C(p[2])
                 self.stop_crit -= 1
-                p[0] = 0 # mark it as evaluated
+                p[0] = 0  # mark it as evaluated
             if p[1] < self.best_current_cost:
                 self.best_guy = p
                 self.best_current_cost = p[1]
@@ -98,14 +73,14 @@ class AGG(Heuristic):
             
             population_length = self.population_lenght - 1
 
-            i_guy1 = randint(0,population_length)
-            i_guy2 = randint(0,population_length)
+            i_guy1 = randint(0, population_length)
+            i_guy2 = randint(0, population_length)
             
             guy1 = self.old_population[i_guy1]
             guy2 = self.old_population[i_guy2]
             
             while guy1 == guy2:
-                i_guy2 = randint(0,population_length)
+                i_guy2 = randint(0, population_length)
                 guy2 = self.old_population[i_guy2]
             
             cost1, cost2 = guy1[1], guy2[1] 
@@ -114,40 +89,20 @@ class AGG(Heuristic):
                 self.current_population[i] = list(guy1)
             else:
                 self.current_population[i] = list(guy2)  
-        
-    def cross(self):
-        '''
-        We need to cross `how_many_cross` individuals 
-        with position based crossing operator
-        '''
-        
-        for i in xrange(0, self.how_many_cross, 2):
-            parent1 = self.current_population[i][2]
-            parent2 = self.current_population[i+1][2]
-            
-            child1, child2 = self.get_two_childs(parent1,parent2)
-                
-            # Add the child to the population and mark it as need to evaluate
-            if child1 != -1:
-                self.current_population[i][2] = list(child1)
-                self.current_population[i][0] = 1
-                self.current_population[i+1][2] = list(child2)
-                self.current_population[i+1][0] = 1
     
     def mutate(self):
         '''
         Mutate a fraction of the population
         '''
-
         for _ in xrange(self.how_many_mutate):
-            i = randint(0, self.population_lenght-1)
-            j = randint(0, self.n-1)
+            i = randint(0, self.population_lenght - 1)
+            j = randint(0, self.n - 1)
             
             # Apply mutation to the gene
-            y = randint(0, self.n-1)
+            y = randint(0, self.n - 1)
 
-            self.current_population[i][2][j],self.current_population[i][2][y] = self.current_population[i][2][y],self.current_population[i][2][j] 
-            self.current_population[i][0] = 1 # Mark as need to evaluate
+            self.current_population[i][2][j], self.current_population[i][2][y] = self.current_population[i][2][y], self.current_population[i][2][j] 
+            self.current_population[i][0] = 1  # Mark as need to evaluate
         
     def reemplace(self):
         '''
@@ -159,7 +114,7 @@ class AGG(Heuristic):
             # find the worst solution in current population an replace it
             pop_sort = list(self.current_population)
             pop_sort.sort(key=itemgetter(1))
-            wort_guy = pop_sort[self.population_lenght-1]
+            wort_guy = pop_sort[self.population_lenght - 1]
             self.current_population[self.current_population.index(wort_guy)] = list(self.best_guy)
     
     def get_two_childs(self, p1, p2):
@@ -179,7 +134,7 @@ class AGG(Heuristic):
                 no_match.append(p1[k])
                 index_no_match.append(k)
                 
-        clean_child = list(child) # A list with only matching items from parents
+        clean_child = list(child)  # A list with only matching items from parents
         
         append_child = childs.append
         if no_match:
