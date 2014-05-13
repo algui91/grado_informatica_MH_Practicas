@@ -61,8 +61,6 @@ class AGG(Heuristic):
         self.S = self.best_guy[2]
         self.cost = self.best_current_cost
         
-        local_search = LocalSearch(self._data, self.seed, self.S, self.cost)
-        print "La local Search " , local_search.cost
         
     def initPopulation(self):
         '''

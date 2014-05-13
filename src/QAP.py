@@ -76,7 +76,7 @@ def main():
     elif (algorithm == 'agg'):
         agg = AGG(data, seed)
         if verbose:
-            print 'Results for AGG, S=', ' C(S)=' , agg.cost , ' seed=' , seed
+            print 'Results for AGG, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
             print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'ts'):

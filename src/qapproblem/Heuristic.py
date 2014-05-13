@@ -66,8 +66,6 @@ class Heuristic(object):
         else:
             s = self.S
         
-        # self.S = map(int,"2 19 6 17 8 11 18 3 9 10 0 5 14 7 1 4 13 15 12 16".split())
-        
         for i in xrange(self._tam):
             for j in xrange(self._tam):
                 cost += self._data.stream_matrix[i][j] * self._data.distance_matrix[s[i]][s[j]]
@@ -93,20 +91,17 @@ class Heuristic(object):
 
         for k in indexes:
             sol_k = sol[k]
-            f_rk = f[r][k]
-            f_sk = f[s][k]
-            f_kr = f[k][r]
-            f_ks = f[k][s]
+
             d_sol_sk = d[sol_s][sol_k]
             d_sol_rk = d[sol_r][sol_k]
             d_sol_ks = d[sol_k][sol_s]
             d_sol_kr = d[sol_k][sol_r]
             
-            
-            delta += f[r][k] * (d[sol_s][sol_k] - d[sol_r][sol_k]) + \
-    				 f[s][k] * (d[sol_r][sol_k] - d[sol_s][sol_k]) + \
-    				 f[k][r] * (d[sol_k][sol_s] - d[sol_k][sol_r]) + \
-    				 f[k][s] * (d[sol_k][sol_r] - d[sol_k][sol_s])
+            delta += f[r][k] * (d_sol_sk - d_sol_rk) + \
+    				 f[s][k] * (d_sol_rk - d_sol_sk) + \
+    				 f[k][r] * (d_sol_ks - d_sol_kr) + \
+    				 f[k][s] * (d_sol_kr - d_sol_ks)
+        
         return delta
 
     def gen_group_of_neighbors(self, number): 
