@@ -50,6 +50,7 @@ class BMB(Heuristic):
                 
         for s in self.sol:
             sol, cost = LS(s)
+
             if cost < c_best:
                 best_sol = sol
                 c_best = cost

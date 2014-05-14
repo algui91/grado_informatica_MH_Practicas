@@ -11,8 +11,8 @@ import argparse
 
 from qapproblem.BMB import BMB
 from qapproblem.Data import Data
+from qapproblem.Elitist_GG_PMX import Elitist_GG_PMX
 from qapproblem.Elitist_GG_pos import Elitist_GG_pos
-from qapproblem.Genetic import GG_Base
 from qapproblem.Grasp import Grasp
 from qapproblem.Greedy import Greedy
 from qapproblem.ILS import ILS
@@ -76,6 +76,12 @@ def main():
             print ils.cost, '\t\t', ils.exec_time
     elif (algorithm == 'elitist_gg_pos'):
         agg = Elitist_GG_pos(data, seed)
+        if verbose:
+            print 'Results for GG_Base, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+        else:
+            print agg.cost, '\t\t', agg.exec_time
+    elif (algorithm == 'elitist_gg_pmx'):
+        agg = Elitist_GG_PMX(data, seed)
         if verbose:
             print 'Results for GG_Base, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:

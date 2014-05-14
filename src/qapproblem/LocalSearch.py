@@ -34,8 +34,7 @@ class LocalSearch(Heuristic):
         tam = self._tam
         deltaC = self.deltaC
         swap = self.swap
-        cost = self.cost
-        
+                    
         while num_eval < max_evals and improve_flag:
             improve_flag = False
             i = 0
