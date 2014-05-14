@@ -47,7 +47,7 @@ class Elitist_GG_PMX(GG_Base):
         self.S = self.best_guy[2]
         self.cost = self.best_current_cost
         
-        
+        print self.local_search(list(self.S))
         
     def cross(self):
         '''

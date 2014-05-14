@@ -10,8 +10,10 @@ import math
 from operator import itemgetter
 from random import randint
 from random import shuffle
+from copy import deepcopy
 
 from qapproblem.Heuristic import Heuristic
+
 
 class GG_Base(Heuristic):
     '''
@@ -69,19 +71,20 @@ class GG_Base(Heuristic):
         '''
         Select two individuals by tournament
         '''
+        population_length = self.population_lenght - 1
+        
         for i in xrange(self.population_lenght):
-            
-            population_length = self.population_lenght - 1
 
             i_guy1 = randint(0, population_length)
             i_guy2 = randint(0, population_length)
             
-            guy1 = self.old_population[i_guy1]
-            guy2 = self.old_population[i_guy2]
+            # If deepcopy consumes much time, copy list with :
+            guy1 = deepcopy(self.old_population[i_guy1])
+            guy2 = deepcopy(self.old_population[i_guy2])
             
             while guy1 == guy2:
                 i_guy2 = randint(0, population_length)
-                guy2 = self.old_population[i_guy2]
+                guy2 = deepcopy(self.old_population[i_guy2])
             
             cost1, cost2 = guy1[1], guy2[1] 
 
