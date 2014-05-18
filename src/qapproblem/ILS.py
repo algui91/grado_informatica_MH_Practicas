@@ -80,7 +80,6 @@ class ILS(Heuristic):
 
         
         S_0 = self.S
-        print S_0
         S, S_cost = self.local_search(S_0)
         
         if S_cost < best_cost:

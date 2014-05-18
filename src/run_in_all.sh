@@ -16,14 +16,9 @@ ficheros="els19.dat chr20a.dat chr25a.dat nug25.dat bur26a.dat bur26b.dat tai30a
 s=2704647398
 echo -e "seed=$s\n\n\n"
 
-for i in $ficheros
-do
-    python QAP.py -d "data/"$i -a stacionary_gg_pos -s $s
-done
-
 echo -e "\n\n\n\n\n"
 
 for i in $ficheros
 do
-    python QAP.py -d "data/"$i -a stacionary_gg_pmx -s $s
+    python QAP.py -d "data/"$i -a ils -s $s
 done
