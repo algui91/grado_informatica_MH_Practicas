@@ -18,6 +18,8 @@ from qapproblem.Greedy import Greedy
 from qapproblem.ILS import ILS
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.SimulatedAnealling import SimulatedAnealling
+from qapproblem.Stacionary_GG_PMX import Stacionary_GG_PMX
+from qapproblem.Stacionary_GG_pos import Stacionary_GG_pos
 from qapproblem.TabuSearch import TabuSearch
 
 
@@ -77,15 +79,27 @@ def main():
     elif (algorithm == 'elitist_gg_pos'):
         agg = Elitist_GG_pos(data, seed)
         if verbose:
-            print 'Results for GG_Base, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+            print 'Results for elitist_gg_pos, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
             print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'elitist_gg_pmx'):
         agg = Elitist_GG_PMX(data, seed)
         if verbose:
-            print 'Results for GG_Base, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+            print 'Results for elitist_gg_pmx, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
             print agg.cost, '\t\t', agg.exec_time
+    elif (algorithm == 'stacionary_gg_pos'):
+        agg = Stacionary_GG_pos(data, seed)
+        if verbose:
+            print 'Results for stacionary_gg_pos, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+        else:
+            print agg.cost, '\t\t', agg.exec_time     
+    elif (algorithm == 'stacionary_gg_pmx'):
+        agg = Stacionary_GG_PMX(data, seed)
+        if verbose:
+            print 'Results for stacionary_gg_pmx, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+        else:
+            print agg.cost, '\t\t', agg.exec_time  
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed

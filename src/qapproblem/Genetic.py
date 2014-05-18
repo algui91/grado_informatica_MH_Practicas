@@ -31,6 +31,13 @@ class GG_Base(Heuristic):
     best_guy = []
     index_best_guy = 0
     
+    worst_current_cost1 = 0
+    worst_guy1 = []
+    index_worst_guy1 = 0
+    worst_current_cost2 = 0
+    worst_guy2 = []
+    index_worst_guy2 = 0
+    
     def __init__(self, f_name, seed):
         super(GG_Base, self).__init__(f_name, seed)
         
@@ -49,14 +56,14 @@ class GG_Base(Heuristic):
         # First element is a list  representing [not_evaluated, cost, S]
         [append([1, 0, get_random_sol()]) for _ in xrange(self.population_lenght)]
     
-    def evaluate(self):
+    def evaluate(self, popupation_l, new_gen=None):
         '''
         Evaluate the population
         '''
-        population = self.current_population
+        population = new_gen if new_gen != None else self.current_population
         C = self.C
         
-        for i in xrange(self.population_lenght):
+        for i in xrange(popupation_l):
             p = population[i]
             if p[0]:  # need to re-evaluate
                 p[1] = C(p[2])
@@ -67,13 +74,15 @@ class GG_Base(Heuristic):
                 self.best_current_cost = p[1]
                 self.index_best_guy = i
     
-    def select(self):
+        self.index_worst_guy1, self.index_worst_guy2 = self.get_index_worst_guy_n(1,2)
+        
+    def select(self, tournament_number, stacionary=False):
         '''
         Select two individuals by tournament
         '''
         population_length = self.population_lenght - 1
         
-        for i in xrange(self.population_lenght):
+        for i in xrange(tournament_number):
 
             i_guy1 = randint(0, population_length)
             i_guy2 = randint(0, population_length)
@@ -91,21 +100,29 @@ class GG_Base(Heuristic):
             if cost1 < cost2:
                 self.current_population[i] = list(guy1)
             else:
-                self.current_population[i] = list(guy2)  
+                self.current_population[i] = list(guy2)
+                
+        if stacionary:
+            return [list(guy1), list(guy2)]
     
-    def mutate(self):
+    def mutate(self, population_l, how_many, new_gen=None):
         '''
         Mutate a fraction of the population
         '''
-        for _ in xrange(self.how_many_mutate):
-            i = randint(0, self.population_lenght - 1)
+        if new_gen:
+            population = new_gen
+        else:
+            population = self.current_population
+            
+        for _ in xrange(how_many):
+            i = randint(0, population_l - 1)
             j = randint(0, self.n - 1)
             
             # Apply mutation to the gene
             y = randint(0, self.n - 1)
 
-            self.current_population[i][2][j], self.current_population[i][2][y] = self.current_population[i][2][y], self.current_population[i][2][j] 
-            self.current_population[i][0] = 1  # Mark as need to evaluate
+            population[i][2][j], population[i][2][y] = population[i][2][y], population[i][2][j] 
+            population[i][0] = 1  # Mark as need to evaluate
         
     def reemplace(self):
         '''
@@ -114,11 +131,17 @@ class GG_Base(Heuristic):
         the worst in the current population is replaced by it.
         '''
         if self.best_guy not in self.current_population:
-            # find the worst solution in current population an replace it
-            pop_sort = list(self.current_population)
-            pop_sort.sort(key=itemgetter(1))
-            wort_guy = pop_sort[self.population_lenght - 1]
-            self.current_population[self.current_population.index(wort_guy)] = list(self.best_guy)
+            self.current_population[self.get_index_worst_guy_n(1)[0]] = deepcopy(self.best_guy)
+    
+    def get_index_worst_guy_n(self, *n):
+        '''
+        @param *n: The index of the nth worst guys
+        '''
+        population = self.current_population
+        pop_sort = list(population)
+        pop_sort.sort(key=itemgetter(1))
+        
+        return [population.index(pop_sort[-i]) for i in n]
     
     def get_two_childs(self, p1, p2):
         '''

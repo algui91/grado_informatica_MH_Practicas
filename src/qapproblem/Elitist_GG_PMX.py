@@ -32,23 +32,23 @@ class Elitist_GG_PMX(GG_Base):
     
     def _find_solution(self):
         
+        population = self.population_lenght
+        
         self.initPopulation()
-        self.evaluate()
+        self.evaluate(population)
         
         while self.stop_crit >= 0:
             # swap current and old population
             self.old_population, self.current_population = self.current_population, self.old_population
-            self.select()
+            self.select(population)
             self.cross()
-            self.mutate()
+            self.mutate(population, self.how_many_mutate)
             self.reemplace()
-            self.evaluate()
+            self.evaluate(population)
         
         self.S = self.best_guy[2]
         self.cost = self.best_current_cost
-        
-        print self.local_search(list(self.S))
-        
+                
     def cross(self):
         '''
         We need to cross `how_many_cross` individuals 
