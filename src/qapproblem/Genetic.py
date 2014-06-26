@@ -24,7 +24,7 @@ class GG_Base(Heuristic):
     mutation_prob = .01
     stop_crit = 20000
     how_many_cross = int(math.ceil(cross_prob * (population_lenght / 2)))
-    
+
     current_population = []
     old_population = [0] * population_lenght
     best_current_cost = 10 ** 10

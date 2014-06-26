@@ -23,8 +23,8 @@ from qapproblem.Stacionary_GG_pos import Stacionary_GG_pos
 from qapproblem.TabuSearch import TabuSearch
 
 
-def main(): 
-    
+def main():
+
     parser = argparse.ArgumentParser(description='QAP Problem')
     parser.add_argument('-d', '--data_file', help='File with the problem data', type=str, required=True)
     parser.add_argument('-a', '--algorithm', help='Algorithm to use', type=str, required=True)
@@ -32,14 +32,14 @@ def main():
     parser.add_argument('-v', '--verbose', help='Show debug info', action='store_true', default=False, required=False)
 
     args = parser.parse_args()
-    
+
     data_file = args.data_file
     algorithm = args.algorithm.strip().lower()
     verbose = args.verbose
     seed = args.seed
-    
+
     data = Data(data_file)
-    
+
     if (algorithm == 'greedy'):
         greedy = Greedy(data, seed)
         if verbose:
@@ -93,18 +93,18 @@ def main():
         if verbose:
             print 'Results for stacionary_gg_pos, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
-            print agg.cost, '\t\t', agg.exec_time     
+            print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'stacionary_gg_pmx'):
         agg = Stacionary_GG_PMX(data, seed)
         if verbose:
             print 'Results for stacionary_gg_pmx, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
-            print agg.cost, '\t\t', agg.exec_time  
+            print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed
     else:
         print 'Argumentos inválidos'
-    
+
 if __name__ == '__main__':
     main()
