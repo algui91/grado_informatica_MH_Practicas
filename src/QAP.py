@@ -21,6 +21,7 @@ from qapproblem.SimulatedAnealling import SimulatedAnealling
 from qapproblem.Stacionary_GG_PMX import Stacionary_GG_PMX
 from qapproblem.Stacionary_GG_pos import Stacionary_GG_pos
 from qapproblem.TabuSearch import TabuSearch
+from qapproblem.MA_10_1_PMX import MA_10_1_PMX
 
 
 def main():
@@ -98,6 +99,12 @@ def main():
         agg = Stacionary_GG_PMX(data, seed)
         if verbose:
             print 'Results for stacionary_gg_pmx, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+        else:
+            print agg.cost, '\t\t', agg.exec_time
+    elif (algorithm == 'ma_10_1_pmx'):
+        agg = MA_10_1_PMX(data, seed)
+        if verbose:
+            print 'Results for MA_10_1_PMX, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
             print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'ts'):

@@ -65,6 +65,7 @@ class Heuristic(object):
             s = S 
         else:
             s = self.S
+
         
         for i in xrange(self._tam):
             for j in xrange(self._tam):
@@ -123,10 +124,10 @@ class Heuristic(object):
         
         return r, s, self.swap(r, s)
     
-    def local_search(self, s):
+    def local_search(self, s, total_eval=10000):
 
         num_eval = 0
-        max_evals = 10000
+        max_evals = total_eval
         improve_flag = True
         self._DLB = [0] * self._data.tam
         _DLB = self._DLB
@@ -155,5 +156,8 @@ class Heuristic(object):
                         _DLB[i] = 1
                 i += 1
         
-        return self.S, self.cost
+        if total_eval != 10000: # If this is not 10000 we are calling LS with MA_10_*, return updated stop criteria
+            return self.S, self.cost, num_eval
+        else:
+            return self.S, self.cost
         
