@@ -49,7 +49,7 @@ class MA_10_01_PMX(MA_10_1_PMX):
             generation_number += 1
             
             if generation_number == 10:
-                for i in xrange(self.population_lenght * .1):
+                for i in xrange(int(self.population_lenght * .1)):
                     (
                         self.current_population[i][2],
                         self.current_population[i][1],
