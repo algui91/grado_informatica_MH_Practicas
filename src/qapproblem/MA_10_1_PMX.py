@@ -61,7 +61,7 @@ class MA_10_1_PMX(GG_Base):
                         self.current_population[i][1],
                         num_evals 
                     ) = self.local_search(self.current_population[i][2], 400)
-                    #self.stop_crit -= num_evals
+                    self.stop_crit -= num_evals
                 generation_number = 0
         
         self.S = self.best_guy[2]
