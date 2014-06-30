@@ -104,23 +104,23 @@ def main():
         else:
             print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'ma_10_1_pmx'):
-        agg = MA_10_1_PMX(data, seed)
+        ma101 = MA_10_1_PMX(data, seed)
         if verbose:
-            print 'Results for MA_10_1_PMX, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+            print 'Results for MA_10_1_PMX, S=', ma101.S ,' C(S)=' , ma101.cost , ' seed=' , seed
         else:
-            print agg.cost, '\t\t', agg.exec_time
+            print ma101.cost, '\t\t', ma101.exec_time
     elif (algorithm == 'ma_10_01_pmx'):
-        agg = MA_10_01_PMX(data, seed)
+        ma1001 = MA_10_01_PMX(data, seed)
         if verbose:
-            print 'Results for MA_10_01_PMX, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+            print 'Results for MA_10_01_PMX, S=', ma1001.S ,' C(S)=' , ma1001.cost , ' seed=' , seed
         else:
-            print agg.cost, '\t\t', agg.exec_time
+            print ma1001.cost, '\t\t', ma1001.exec_time
     elif (algorithm == 'ma_10_01best_pmx'):
-        agg = MA_10_01Best_PMX(data, seed)
+        ma1001b = MA_10_01Best_PMX(data, seed)
         if verbose:
-            print 'Results for MA_10_01Best_PMX, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+            print 'Results for MA_10_01Best_PMX, S=', ma1001b.S ,' C(S)=' , ma1001b.cost , ' seed=' , seed
         else:
-            print agg.cost, '\t\t', agg.exec_time
+            print ma1001b.cost, '\t\t', ma1001b.exec_time
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed

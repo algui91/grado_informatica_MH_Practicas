@@ -6,11 +6,12 @@ Created on Apr 30, 2014
 Licensed under GPLv3
 '''
 
+from copy import deepcopy
+import itertools
 import math
 from operator import itemgetter
 from random import randint
 from random import shuffle
-from copy import deepcopy
 
 from qapproblem.Heuristic import Heuristic
 
@@ -94,6 +95,9 @@ class GG_Base(Heuristic):
             while guy1 == guy2:
                 i_guy2 = randint(0, population_length)
                 guy2 = deepcopy(self.old_population[i_guy2])
+                if len(list(k for k,_ in itertools.groupby(self.current_population))) == 1:
+                    self.current_population = []
+                    self.initPopulation()
 
             cost1, cost2 = guy1[1], guy2[1]
 

@@ -32,7 +32,6 @@ class MA_10_01Best_PMX(MA_10_1_PMX):
         self.exec_time = Timer(timewrapper).timeit(number=1)
     
     def _find_solution(self):
-        
         population = self.population_lenght
         
         self.initPopulation()
@@ -66,4 +65,4 @@ class MA_10_01Best_PMX(MA_10_1_PMX):
                 generation_number = 0
         
         self.S = self.best_guy[2]
-        self.cost = self.best_current_cost  
+        self.cost = self.best_current_cost
