@@ -17,12 +17,13 @@ from qapproblem.Grasp import Grasp
 from qapproblem.Greedy import Greedy
 from qapproblem.ILS import ILS
 from qapproblem.LocalSearch import LocalSearch
+from qapproblem.MA_10_01Best_PMX import MA_10_01Best_PMX
+from qapproblem.MA_10_01_PMX import MA_10_01_PMX
+from qapproblem.MA_10_1_PMX import MA_10_1_PMX
 from qapproblem.SimulatedAnealling import SimulatedAnealling
 from qapproblem.Stacionary_GG_PMX import Stacionary_GG_PMX
 from qapproblem.Stacionary_GG_pos import Stacionary_GG_pos
 from qapproblem.TabuSearch import TabuSearch
-from qapproblem.MA_10_1_PMX import MA_10_1_PMX
-from qapproblem.MA_10_01_PMX import MA_10_01_PMX
 
 
 def main():
@@ -112,6 +113,12 @@ def main():
         agg = MA_10_01_PMX(data, seed)
         if verbose:
             print 'Results for MA_10_01_PMX, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
+        else:
+            print agg.cost, '\t\t', agg.exec_time
+    elif (algorithm == 'ma_10_01best_pmx'):
+        agg = MA_10_01Best_PMX(data, seed)
+        if verbose:
+            print 'Results for MA_10_01Best_PMX, S=', agg.S ,' C(S)=' , agg.cost , ' seed=' , seed
         else:
             print agg.cost, '\t\t', agg.exec_time
     elif (algorithm == 'ts'):
