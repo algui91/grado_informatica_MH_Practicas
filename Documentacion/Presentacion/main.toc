@@ -1,8 +1,0 @@
-\beamer@endinputifotherversion {3.24pt}
-\beamer@sectionintoc {1}{Compilar e instalar nginx}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Preparando el entorno}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Configurar y compilar}{7}{0}{1}
-\beamer@sectionintoc {2}{Instalar PHP-FPM}{11}{0}{2}
-\beamer@subsectionintoc {2}{1}{Añadir repositorios}{11}{0}{2}
-\beamer@sectionintoc {3}{Calcular el número de procesos necesarios}{15}{0}{3}
-\beamer@subsectionintoc {3}{1}{Calcular max\_children}{15}{0}{3}
