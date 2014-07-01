@@ -95,9 +95,10 @@ class GG_Base(Heuristic):
             while guy1 == guy2:
                 i_guy2 = randint(0, population_length)
                 guy2 = deepcopy(self.old_population[i_guy2])
-                if len(list(k for k,_ in itertools.groupby(self.current_population))) == 1:
-                    self.current_population = []
+                if len(list(k for k,_ in itertools.groupby(self.old_population))) == 1:
+                    self.old_population = [0] * self.population_lenght
                     self.initPopulation()
+                    self.old_population, self.current_population = self.current_population, self.old_population
 
             cost1, cost2 = guy1[1], guy2[1]
 
