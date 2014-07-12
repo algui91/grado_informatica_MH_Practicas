@@ -10,6 +10,7 @@ Licensed under GPLv3
 import argparse
 
 from qapproblem.BMB import BMB
+from qapproblem.CompeticionPoblacional import CompeticionPoblacional
 from qapproblem.Data import Data
 from qapproblem.Elitist_GG_PMX import Elitist_GG_PMX
 from qapproblem.Elitist_GG_pos import Elitist_GG_pos
@@ -121,6 +122,12 @@ def main():
             print 'Results for MA_10_01Best_PMX, S=', ma1001b.S ,' C(S)=' , ma1001b.cost , ' seed=' , seed
         else:
             print ma1001b.cost, '\t\t', ma1001b.exec_time
+    elif (algorithm == 'comppob'):
+        compPob = CompeticionPoblacional(data, seed)
+        if verbose:
+            print 'Results for compPob, S=', compPob.S ,' C(S)=' , compPob.cost , ' seed=' , seed
+        else:
+            print compPob.cost, '\t\t', compPob.exec_time
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed
