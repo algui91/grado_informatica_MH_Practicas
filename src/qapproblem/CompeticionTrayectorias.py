@@ -91,7 +91,7 @@ class CompeticionTrayectorias(Heuristic):
             
         for _ in xrange(24):
             S_p = self.mutate(S) 
-            S_pp, S_pp_cost = self.local_search(S_p, 100000, True)
+            S_pp, S_pp_cost = self.local_search(S_p) # 10000 for each LS, 100000 total
 
             if S_pp_cost < best_cost:
                 S = S_pp
