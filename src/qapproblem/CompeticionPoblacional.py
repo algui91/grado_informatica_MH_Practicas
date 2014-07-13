@@ -6,6 +6,7 @@ Created on June 27, 2014
 Licensed under GPLv3
 '''
 import heapq
+import math
 from operator import itemgetter
 from timeit import Timer
 
@@ -24,13 +25,11 @@ class CompeticionPoblacional(MA_10_1_PMX):
     old_population = [0] * population_lenght
     stop_crit = 100000
     
-    
     def __init__(self, f_name, seed):
         '''
         Constructor
         '''
         super(CompeticionPoblacional, self).__init__(f_name, seed)
-        
              
         def timewrapper():
             return self._find_solution()
@@ -68,8 +67,8 @@ class CompeticionPoblacional(MA_10_1_PMX):
                 generation_number = 0
         
         self.S = self.best_guy[2]
-        self.cost = self.best_current_cost  
-        
+        self.cost = self.best_current_cost
+                
     def cross(self):
         '''
         We need to cross `how_many_cross` individuals 
@@ -79,7 +78,6 @@ class CompeticionPoblacional(MA_10_1_PMX):
         for i in xrange(0, self.how_many_cross, 2):
             parent1 = self.current_population[i][2]
             parent2 = self.current_population[i + 1][2]
-            
             child1, child2 = self.get_two_childs_SPX(parent1, parent2)
                 
             self.current_population[i][2] = list(child1)
@@ -91,7 +89,6 @@ class CompeticionPoblacional(MA_10_1_PMX):
         '''
         Get two children based on the SPX operator (Swap Path Crossover)
         '''
-        #cut1 = randint(0, self.n - 1)
         
         childs = []
         append = childs.append

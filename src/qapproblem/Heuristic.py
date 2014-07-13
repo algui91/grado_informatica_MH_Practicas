@@ -124,7 +124,7 @@ class Heuristic(object):
         
         return r, s, self.swap(r, s)
     
-    def local_search(self, s, total_eval=10000):
+    def local_search(self, s, total_eval=10000, ils_competition=False):
 
         num_eval = 0
         max_evals = total_eval
@@ -155,8 +155,7 @@ class Heuristic(object):
                     if not improve_flag:
                         _DLB[i] = 1
                 i += 1
-        
-        if total_eval != 10000: # If this is not 10000 we are calling LS with MA_10_*, return updated stop criteria
+        if total_eval != 10000 and not ils_competition: # If this is not 10000 we are calling LS with MA_10_*, return updated stop criteria
             return self.S, self.cost, num_eval
         else:
             return self.S, self.cost

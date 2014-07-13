@@ -11,12 +11,12 @@ import argparse
 
 from qapproblem.BMB import BMB
 from qapproblem.CompeticionPoblacional import CompeticionPoblacional
+from qapproblem.CompeticionTrayectorias import CompeticionTrayectorias
 from qapproblem.Data import Data
 from qapproblem.Elitist_GG_PMX import Elitist_GG_PMX
 from qapproblem.Elitist_GG_pos import Elitist_GG_pos
 from qapproblem.Grasp import Grasp
 from qapproblem.Greedy import Greedy
-from qapproblem.ILS import CompeticionTrayectorias
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.MA_10_01Best_PMX import MA_10_01Best_PMX
 from qapproblem.MA_10_01_PMX import MA_10_01_PMX
@@ -131,7 +131,9 @@ def main():
     elif (algorithm == 'comptray'):
         comptray = CompeticionTrayectorias(data, seed)
         if verbose:
-            print 'Results for comptray, S=', comptray.S ,' C(S)=' , comptray.cost , ' seed=' , seed
+            print comptray._tam, comptray.cost
+            for i in xrange(comptray._tam):
+                print comptray.S[i],
         else:
             print comptray.cost, '\t\t', comptray.exec_time
 

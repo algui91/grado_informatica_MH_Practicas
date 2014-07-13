@@ -6,5 +6,5 @@ echo -e "seed=$s\n\n\n"
 
 for i in $ficheros
 do
-    python QAP.py -d "Competición/"$i".dat" -a ils -s $s
+    python QAP.py -d "Competición/"$i".dat" -a comptray -s $s -v
 done
