@@ -16,7 +16,7 @@ from qapproblem.Elitist_GG_PMX import Elitist_GG_PMX
 from qapproblem.Elitist_GG_pos import Elitist_GG_pos
 from qapproblem.Grasp import Grasp
 from qapproblem.Greedy import Greedy
-from qapproblem.ILS import ILS
+from qapproblem.ILS import CompeticionTrayectorias
 from qapproblem.LocalSearch import LocalSearch
 from qapproblem.MA_10_01Best_PMX import MA_10_01Best_PMX
 from qapproblem.MA_10_01_PMX import MA_10_01_PMX
@@ -75,9 +75,9 @@ def main():
         else:
             print grasp.cost, '\t\t', grasp.exec_time
     elif (algorithm == 'ils'):
-        ils = ILS(data, seed)
+        ils = CompeticionTrayectorias(data, seed)
         if verbose:
-            print 'Results for ILS, S=', ils.S , ' C(S)=' , ils.cost , ' seed=' , seed
+            print 'Results for CompeticionTrayectorias, S=', ils.S , ' C(S)=' , ils.cost , ' seed=' , seed
         else:
             print ils.cost, '\t\t', ils.exec_time
     elif (algorithm == 'elitist_gg_pos'):
@@ -128,6 +128,13 @@ def main():
             print 'Results for compPob, S=', compPob.S ,' C(S)=' , compPob.cost , ' seed=' , seed
         else:
             print compPob.cost, '\t\t', compPob.exec_time
+    elif (algorithm == 'comptray'):
+        comptray = CompeticionTrayectorias(data, seed)
+        if verbose:
+            print 'Results for comptray, S=', comptray.S ,' C(S)=' , comptray.cost , ' seed=' , seed
+        else:
+            print comptray.cost, '\t\t', comptray.exec_time
+
     elif (algorithm == 'ts'):
         ts = TabuSearch(data, seed)
         print 'Results for Tabu Search, S=', ts.S , ' C(S)=' , ts.cost , ' seed=' , seed
