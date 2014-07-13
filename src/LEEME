@@ -1,0 +1,18 @@
+Para ejecutar el programa hay que instalar el módulo numpy (pip install numpy)
+
+python QAP.py -h
+usage: QAP.py [-h] -d DATA_FILE -a ALGORITHM -s SEED [-v]
+
+QAP Problem
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DATA_FILE, --data_file DATA_FILE
+                        File with the problem data
+  -a ALGORITHM, --algorithm ALGORITHM
+                        Algorithm to use
+  -s SEED, --seed SEED  Seed to use for randomly generated initial solutions
+  -v, --verbose         Show debug info
+
+
+python QAP.py -d <datos del problema> -a [comppob | comptray] -s semilla -v<verbose>
