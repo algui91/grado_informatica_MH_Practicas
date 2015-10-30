@@ -1,0 +1,194 @@
+\documentclass[twoside]{article}
+
+
+% ------
+% Fonts and typesetting settings
+%\usepackage[sc]{mathpazo}
+\usepackage[T1]{fontenc}
+\linespread{1.05} % Palatino needs more space between lines
+\usepackage{microtype}
+
+
+% ------
+% Page layout
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
+\usepackage[font=it]{caption}
+\usepackage{paralist}
+\usepackage{multicol}
+
+% ------
+% Lettrines
+\usepackage{lettrine}
+
+
+% ------
+% Abstract
+\usepackage{abstract}
+	\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+	\renewcommand{\abstracttextfont}{\normalfont\small\itshape}
+
+
+% ------
+% Titling (section/subsection)
+\usepackage{titlesec}
+\renewcommand\thesection{\Roman{section}}
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}
+
+
+% ------
+% Header/footer
+\usepackage{fancyhdr}
+	\pagestyle{fancy}
+	\fancyhead{}
+	\fancyfoot{}
+	\fancyhead[C]{Metaheurísticas $\bullet$ \date{\today} $\bullet$ Competición}
+	\fancyfoot[RO,LE]{\thepage}
+
+
+% ------
+% Clickable URLs (optional)
+\usepackage{hyperref}
+
+% ------
+% Maketitle metadata
+\title{\vspace{-15mm}%
+	\fontsize{24pt}{10pt}\selectfont
+	\textbf{Competición}
+	}
+\author{%
+	\large
+	\textsc{Alejandro Alcalde}\thanks{Template by \href{http://www.howtotex.com}{howtoTeX.com}, \href{http://www.elbauldelprogramador.com}{elbauldelprogramador.com}} \\[2mm]
+	\normalsize	Tercer curso Grado en Ingeniería Informática, Granada, grupo de los miércoles a las 17.30 \\
+	\normalsize	\href{mailto:algui91@gmail.com}{algui91@gmail.com}	\\
+	\normalsize Categorías a participar: Trayectorias, poblacional y mejor sol. Global
+	\vspace{-5mm}
+	}
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MIS CAMBIOS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{"/home/hkr/Drive/algui91/Grado_Ing_Informatica/Global/myConfig"}
+\usepackage{booktabs} % Para la tabla
+%\let\oldtabular\tabular
+%\renewcommand{\tabular}{\footnotesize\oldtabular}
+\usepackage{graphicx}
+\usepackage{amsmath}                                    % Math
+
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\tableofcontents
+\newpage
+
+%\begin{multicols}{2}
+
+\section{Modificaciones realizadas sobre los algoritmos de prácticas}
+
+La única modificación notable ha sido realizada al Híbrido, en el cual
+se ha implementado el operador de cruce Swap Path Crossover (SPX). En lugar
+de escoger el punto de corte aleatorio, se ha considerado comenzar siempre
+por el primer elemento.
+
+\section{Manual de ejecución}
+
+La implementación se ha realizado en Python. Es necesario tener instalado
+el módulo Numpy.
+
+\begin{bashcode}
+$ pip install numpy
+\end{bashcode}
+
+Tras esto, el programa se puede ejecutar con los siguientes argumentos:
+
+\begin{bashcode}
+$ python QAP.py -d <datos del problema> -a \
+[CompPob | comptray] -s 12345678 -v<verbose>
+\end{bashcode}
+
+Los directorios con las instancias y soluciones se encuentran en
+\pythoninline/Competición/ y \pythoninline/CompeticiónILS/.
+
+Para comprobar que los resultados son correctos, se ha incluido un
+programa llamado \pythoninline/test_results.py/ que comprueba si las
+soluciones escritas en los ficheros .sln son en realidad correctas, para
+ello se les aplica la función objetivo de nuevo. Se usa como sigue:
+
+\begin{pythoncode}
+python test_results.py -d Competición
+python test_results.py -d CompeticiónILS
+\end{pythoncode}
+
+
+\section{Experimentos y análisis de resultados}
+
+A continuación se muestra la tabla con los resultados para los distintos algoritmos.
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{lll}
+    \toprule
+    Algoritmo               & Desviación & Tiempo \\
+    \midrule
+GA-LS&4.53&0.05\\
+ILS&3.76&12.28\\
+    \bottomrule
+    \end{tabular}
+    \caption{}
+\end{table}
+%\end{multicols}
+
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{llll}
+    \hline
+    \multicolumn{4}{c}{GA-LS} \\
+    \toprule
+    Caso               & Coste & Desv & Tiempo \\
+    \midrule
+Esc64a&116&0.00&0.03\\
+Esc128&66&3.13&0.12\\
+Lipa90b&15340052&22.81&0.06\\
+Sko64&50028&3.15&0.04\\
+Sko72&68964&4.09&0.04\\
+Sko81&94922&4.31&0.06\\
+Sko90 &119310&3.27&0.06\\
+Sko100a&158918&4.55&0.06\\
+Tai64c&1858710&0.15&0.04\\
+Tai80a&14238716&5.48&0.04\\
+    \bottomrule
+    \end{tabular}
+    \caption{}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+    \begin{tabular}{llll}
+    \hline
+    \multicolumn{4}{c}{ILS} \\
+    \toprule
+    Caso               & Coste & Desv & Tiempo \\
+    \midrule
+116&0.00&8.89\\
+66&3.13&41.31\\
+15297919&22.48&14.26\\
+49134&1.31&8.86\\
+67868&2.43&10.54\\
+93432&2.67&11.47\\
+118526&2.59&13.33\\
+156602&3.03&14.14\\
+1857646&0.09&9.65\\
+13973342&3.51&13.58\\
+
+    \bottomrule
+    \end{tabular}
+    \caption{}
+\end{table}
+
+\end{document}
